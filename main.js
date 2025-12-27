@@ -19,6 +19,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const selectedMachineDateDisplay = document.getElementById('selectedMachineDateDisplay');
     let selectedMachineDateTime = null;
 
+    // Sorun/Revizyon modalı elementleri
+    const soreModal = document.getElementById('soreModal');
+    const closeSoreBtn = document.getElementById('closeSoreBtn');
+    const cancelSoreBtn = document.getElementById('cancelSoreBtn');
+    const soreForm = document.getElementById('soreForm');
+    const soreModalTitle = document.getElementById('soreModalTitle');
+    let currentSoreType = null; // 'sorun' veya 'revizyon'
+    let currentMachineIndex = null;
+
     // Navbar navigasyon
     navItems.forEach(item => {
         item.addEventListener('click', function() {
@@ -64,6 +73,17 @@ document.addEventListener('DOMContentLoaded', function() {
     loginCancel.addEventListener('click', closeLoginModal);
     closeMachineBtn.addEventListener('click', closeMachineModal);
     cancelMachineBtn.addEventListener('click', closeMachineModal);
+
+    // Sorun/Revizyon modalı kapat
+    function closeSoreModal() {
+        soreModal.classList.remove('active');
+        soreForm.reset();
+        currentSoreType = null;
+        currentMachineIndex = null;
+    }
+
+    closeSoreBtn.addEventListener('click', closeSoreModal);
+    cancelSoreBtn.addEventListener('click', closeSoreModal);
 
     // Makine datepicker aç
     openMachineDatepickerBtn.addEventListener('click', function() {
@@ -143,11 +163,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    soreModal.addEventListener('click', function(e) {
+        if (e.target === soreModal) closeSoreModal();
+    });
+
     // ESC tuşu
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
             if (machineDatepickerModal.classList.contains('active')) {
                 machineDatepickerModal.classList.remove('active');
+            } else if (soreModal.classList.contains('active')) {
+                closeSoreModal();
             } else if (machineModal.classList.contains('active')) {
                 closeMachineModal();
             } else if (loginModal.classList.contains('active')) {
@@ -159,6 +185,50 @@ document.addEventListener('DOMContentLoaded', function() {
     loginPassword.addEventListener('keypress', function(e) {
         if (e.key === 'Enter') loginSubmit.click();
     });
+
+    // Sorun/Revizyon form submit
+    soreForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('soreTitle').value;
+        const description = document.getElementById('soreDescription').value;
+        const status = document.getElementById('soreStatus').value;
+
+        console.log('Yeni ' + currentSoreType + ':', {
+            type: currentSoreType,
+            machineIndex: currentMachineIndex,
+            title,
+            description,
+            status
+        });
+
+        // iframe içindeki makine sayfasına event gönder
+        const contentFrame = document.getElementById('content-frame');
+        if (contentFrame && contentFrame.contentWindow) {
+            contentFrame.contentWindow.dispatchEvent(new CustomEvent('soreAdded', {
+                detail: {
+                    type: currentSoreType,
+                    machineIndex: currentMachineIndex,
+                    title,
+                    description,
+                    status
+                }
+            }));
+        }
+
+        alert((currentSoreType === 'sorun' ? 'Sorun' : 'Revizyon') + ' Eklendi!\n\nBaşlık: ' + title + '\nDurum: ' + status);
+        
+        closeSoreModal();
+    });
+
+    // Global fonksiyon - makine.js'ten çağrılabilir
+    window.openSoreModal = function(type, machineIndex) {
+        currentSoreType = type;
+        currentMachineIndex = machineIndex;
+        soreModalTitle.textContent = type === 'sorun' ? 'Sorun Ekle' : 'Revizyon Ekle';
+        soreModal.classList.add('active');
+        document.getElementById('soreTitle').focus();
+    };
 
     // Makine datepicker'ı başlat
     function initializeMachineDatepicker() {

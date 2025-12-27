@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="main.css">
     <link rel="stylesheet" href="makineekle.css">
     <link rel="stylesheet" href="datepicker.css">
+    <link rel="stylesheet" href="sore.css">
 </head>
 <body>
     <div class="btn" id="btn1"></div>
@@ -148,6 +149,42 @@
                     <button class="footer-btn machine-clear-btn" type="button">Temizle</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Sorun/Revizyon Modal -->
+    <div class="modal-overlay" id="soreModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 class="modal-title" id="soreModalTitle">Sorun Ekle</h2>
+                <button class="close-btn" id="closeSoreBtn" type="button">×</button>
+            </div>
+            
+            <form class="modal-form" id="soreForm">
+                <div class="form-row">
+                    <label class="form-label">Başlık:</label>
+                    <input class="form-input" type="text" id="soreTitle" placeholder="Başlık..." required />
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">Açıklama:</label>
+                    <textarea class="form-textarea" id="soreDescription" placeholder="Detaylı açıklama..." rows="4" required></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">Durum:</label>
+                    <select class="form-select" id="soreStatus" required>
+                        <option value="beklemede">Beklemede</option>
+                        <option value="devam-ediyor">Devam Ediyor</option>
+                        <option value="tamamlandi">Tamamlandı</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelSoreBtn">İptal</button>
+                    <button type="submit" class="submit-btn">Kaydet</button>
+                </div>
+            </form>
         </div>
     </div>
 
