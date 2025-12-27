@@ -11,35 +11,36 @@
         <div class="user-avatar">FG</div>
         <div class="card-title">Fatih GÜRAL</div>
         <div class="add-label">Görev Ekle</div>
-        <div class="add-btn">+</div>
+        <div class="add-btn" data-user="FG" data-username="Fatih GÜRAL">+</div>
     </div>
 
     <div class="montaj-card montaj-card-2">
         <div class="user-avatar">DA</div>
         <div class="card-title">Doğan AÇIKEL</div>
         <div class="add-label">Görev Ekle</div>
-        <div class="add-btn">+</div>
+        <div class="add-btn" data-user="DA" data-username="Doğan AÇIKEL">+</div>
     </div>
 
     <div class="montaj-card montaj-card-3">
         <div class="user-avatar">YŞ</div>
         <div class="card-title">Yakup ŞAHİN</div>
         <div class="add-label">Görev Ekle</div>
-        <div class="add-btn">+</div>
+        <div class="add-btn" data-user="YŞ" data-username="Yakup ŞAHİN">+</div>
     </div>
 
     <div class="montaj-card montaj-card-4">
         <div class="user-avatar">HG</div>
         <div class="card-title">Hakan GÜL</div>
         <div class="add-label">Görev Ekle</div>
-        <div class="add-btn">+</div>
+        <div class="add-btn" data-user="HG" data-username="Hakan GÜL">+</div>
     </div>
 
     <div class="tasks-container">
         <div class="task-card">
+            <div class="task-card-avatar">FG</div>
             <div class="task-description">Görev açıklaması buraya gelecek</div>
             <div class="task-deadline">Bitiş: 31.12.2025</div>
-            <div class="task-counter">4 gün kaldı</div>
+            <div class="task-counter" data-deadline="2025-12-31">4 gün kaldı</div>
             <div class="combo task-status" data-open="false">
                 <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
                     <span class="combo__value">Devam Ediyor</span>
@@ -53,9 +54,10 @@
         </div>
 
         <div class="task-card">
+            <div class="task-card-avatar">DA</div>
             <div class="task-description">İkinci görev açıklaması</div>
             <div class="task-deadline">Bitiş: 28.12.2025</div>
-            <div class="task-counter">1 gün kaldı</div>
+            <div class="task-counter" data-deadline="2025-12-28">1 gün kaldı</div>
             <div class="combo task-status" data-open="false">
                 <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
                     <span class="combo__value">Devam Ediyor</span>
@@ -69,9 +71,10 @@
         </div>
 
         <div class="task-card">
+            <div class="task-card-avatar">YŞ</div>
             <div class="task-description">Üçüncü görev detayları</div>
             <div class="task-deadline">Bitiş: 02.01.2026</div>
-            <div class="task-counter">6 gün kaldı</div>
+            <div class="task-counter" data-deadline="2026-01-02">6 gün kaldı</div>
             <div class="combo task-status" data-open="false">
                 <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
                     <span class="combo__value">Devam Ediyor</span>
@@ -82,6 +85,27 @@
                 </ul>
             </div>
             <button class="task-delete">×</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-card">
+            <h2>Yeni Görev Ekle</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskDescription">Görev Tanımı:</label>
+                    <textarea id="taskDescription" placeholder="Görev açıklamasını girin..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="taskDeadline">Bitiş Tarihi:</label>
+                    <input type="date" id="taskDeadline" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" id="cancelBtn">İptal</button>
+                    <button type="submit">Tamam</button>
+                </div>
+            </form>
         </div>
     </div>
 

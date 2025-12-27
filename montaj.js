@@ -1,10 +1,138 @@
 // Montaj page JavaScript
 
-// Combobox işlevselliği
+// Global değişkenler
+let currentUser = '';
+let currentUserInitials = '';
+
 document.addEventListener('DOMContentLoaded', function() {
-    const combos = document.querySelectorAll('.combo');
+    // Modal elementleri
+    const modal = document.getElementById('taskModal');
+    const taskForm = document.getElementById('taskForm');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const addBtns = document.querySelectorAll('.add-btn');
+    const tasksContainer = document.querySelector('.tasks-container');
     
-    combos.forEach(combo => {
+    // Görev ekle butonlarına tıklama
+    addBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            currentUserInitials = this.getAttribute('data-user');
+            currentUser = this.getAttribute('data-username');
+            openModal();
+        });
+    });
+    
+    // Modal aç
+    function openModal() {
+        modal.classList.add('active');
+        document.getElementById('taskDescription').focus();
+    }
+    
+    // Modal kapat
+    function closeModal() {
+        modal.classList.remove('active');
+        taskForm.reset();
+    }
+    
+    // İptal butonu
+    cancelBtn.addEventListener('click', closeModal);
+    
+    // Modal dışına tıklama
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // ESC tuşu
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+    
+    // Form gönderme
+    taskForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const description = document.getElementById('taskDescription').value;
+        const deadline = document.getElementById('taskDeadline').value;
+        
+        // Yeni görev kartı oluştur
+        const taskCard = createTaskCard(currentUserInitials, description, deadline);
+        tasksContainer.appendChild(taskCard);
+        
+        // Yeni eklenen combobox'u başlat
+        initializeCombobox(taskCard.querySelector('.combo'));
+        
+        // Silme butonunu aktif et
+        const deleteBtn = taskCard.querySelector('.task-delete');
+        deleteBtn.addEventListener('click', function() {
+            taskCard.remove();
+        });
+        
+        // Geri sayımı başlat
+        const counterEl = taskCard.querySelector('.task-counter');
+        startCountdown(deadline, counterEl);
+        
+        closeModal();
+    });
+    
+    // Görev kartı oluştur
+    function createTaskCard(userInitials, description, deadline) {
+        const card = document.createElement('div');
+        card.className = 'task-card';
+        
+        // Tarihi formatla
+        const [year, month, day] = deadline.split('-');
+        const formattedDate = `${day}.${month}.${year}`;
+        
+        card.innerHTML = `
+            <div class="task-card-avatar">${userInitials}</div>
+            <div class="task-description">${description}</div>
+            <div class="task-deadline">Bitiş: ${formattedDate}</div>
+            <div class="task-counter" data-deadline="${deadline}">Hesaplanıyor...</div>
+            <div class="combo task-status" data-open="false">
+                <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="combo__value">Devam Ediyor</span>
+                </button>
+                <ul class="combo__list" role="listbox" tabindex="-1">
+                    <li class="combo__option" role="option" data-value="Devam Ediyor">Devam Ediyor</li>
+                    <li class="combo__option" role="option" data-value="Bitti">Bitti</li>
+                </ul>
+            </div>
+            <button class="task-delete">×</button>
+        `;
+        
+        return card;
+    }
+    
+    // Geri sayım fonksiyonu
+    function startCountdown(deadline, counterElement) {
+        function updateCountdown() {
+            const now = new Date();
+            const deadlineDate = new Date(deadline + 'T23:59:59'); // Gün sonuna kadar
+            const diff = deadlineDate - now;
+            
+            if (diff <= 0) {
+                counterElement.textContent = 'Süre doldu!';
+                counterElement.style.color = '#ff0000';
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            counterElement.textContent = `${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`;
+        }
+        
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+    
+    // Combobox başlatma fonksiyonu
+    function initializeCombobox(combo) {
         const button = combo.querySelector('.combo__button');
         const list = combo.querySelector('.combo__list');
         const valueEl = combo.querySelector('.combo__value');
@@ -45,13 +173,11 @@ document.addEventListener('DOMContentLoaded', function() {
             button.focus();
         }
         
-        // Aç / kapa
         button.addEventListener('click', () => {
             const open = combo.dataset.open === 'true';
             setOpen(!open);
         });
         
-        // Seçenek tıklama
         options.forEach((opt, i) => {
             opt.addEventListener('click', () => selectOption(opt));
             opt.addEventListener('mousemove', () => {
@@ -60,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-        // Klavye kontrolü
         button.addEventListener('keydown', (e) => {
             const open = combo.dataset.open === 'true';
             
@@ -88,15 +213,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+    }
+    
+    // Mevcut combobox'ları başlat
+    const combos = document.querySelectorAll('.combo');
+    combos.forEach(combo => initializeCombobox(combo));
+    
+    // Mevcut görev kartlarının geri sayımını başlat
+    const existingCounters = document.querySelectorAll('.task-counter');
+    existingCounters.forEach(counter => {
+        const deadline = counter.getAttribute('data-deadline');
+        if (deadline) {
+            startCountdown(deadline, counter);
+        }
+    });
+    
+    // Mevcut silme butonları
+    const deleteButtons = document.querySelectorAll('.task-delete');
+    deleteButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            this.closest('.task-card').remove();
+        });
     });
     
     // Dışarı tıklayınca tüm comboları kapat
     document.addEventListener('click', (e) => {
-        combos.forEach(combo => {
-            if (!combo.contains(e.target)) {
+        if (!e.target.closest('.combo')) {
+            combos.forEach(combo => {
                 combo.dataset.open = 'false';
-                combo.querySelector('.combo__button').setAttribute('aria-expanded', 'false');
-            }
-        });
+                const button = combo.querySelector('.combo__button');
+                if (button) button.setAttribute('aria-expanded', 'false');
+            });
+        }
     });
 });
