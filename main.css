@@ -18,8 +18,9 @@
     --btn2-text: "Buton 2";
     --btn3-text: "Buton 3";
     --btn4-text: "Buton 4";
-    --btn-font-size: 0.8em;
-    --btn-hover-font-size: 1.0em;
+    --btn5-text: "Makine Ekle +";
+    --btn-font-size: 0.7em;
+    --btn-hover-font-size: 0.9em;
 
     /* Card position and size */
     --card-x: 30px;
@@ -86,6 +87,10 @@ body {
     content: var(--btn4-text);
 }
 
+#btn5::after {
+    content: var(--btn5-text);
+}
+
 #btn1 {
     left: var(--btn-start-x);
     top: var(--btn-start-y);
@@ -103,6 +108,11 @@ body {
 
 #btn4 {
     left: calc(var(--btn-start-x) + (var(--btn-width) + var(--btn-gap)) * 3);
+    top: var(--btn-start-y);
+}
+
+#btn5 {
+    left: calc(var(--btn-start-x) + (var(--btn-width) + var(--btn-gap)) * 4);
     top: var(--btn-start-y);
 }
 

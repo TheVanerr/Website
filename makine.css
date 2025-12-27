@@ -3,6 +3,31 @@
     --white: #fff;
     --text: #111;
     --bg: #e8e8e8;
+    
+    /* Makine Kart Ayarları */
+    --card-width: 895px;
+    --card-height: 200px;
+    --card-gap-x: 20px;  /* Kartlar arası yatay mesafe */
+    --card-gap-y: 20px;  /* Kartlar arası dikey mesafe */
+    --card-position-x: 20px;  /* Kartların başlangıç X konumu */
+    --card-position-y: 20px;  /* Kartların başlangıç Y konumu */
+    --card-padding: 15px;
+    --card-border-radius: 25px;
+    --card-border-width: 3px;
+    
+    /* Kart İçi Buton Ayarları */
+    --card-button-width: 140px;
+    --card-button-height: 35px;
+    --card-button-border-radius: 25px;
+    --card-button-font-size: 13px;
+    
+    /* Sorun Ekle Buton Konumu */
+    --sorun-btn-right: 520px;  /* Kartın sağından uzaklık */
+    --sorun-btn-bottom: 155px;  /* Kartın altından uzaklık */
+    
+    /* Revizyon Ekle Buton Konumu */
+    --revizyon-btn-right: 150px;  /* Kartın sağından uzaklık */
+    --revizyon-btn-bottom: 155px;  /* Kartın altından uzaklık */
 }
 
 * {
@@ -14,9 +39,126 @@
 body {
     font-family: Arial, sans-serif;
     background-color: var(--bg);
-    padding: 20px;
+    padding: 0;
+    overflow: auto;
 }
 
-h1 {
+.machines-container {
+    display: grid;
+    grid-template-columns: repeat(2, var(--card-width));
+    column-gap: var(--card-gap-x);
+    row-gap: var(--card-gap-y);
+    padding-left: var(--card-position-x);
+    padding-top: var(--card-position-y);
+    padding-bottom: var(--card-position-y);
+}
+
+.machine-card {
+    width: var(--card-width);
+    height: var(--card-height);
+    background-color: var(--white);
+    border: var(--card-border-width) solid var(--blue);
+    border-radius: var(--card-border-radius);
+    padding: var(--card-padding);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.machine-card:hover {
+    background-color: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(49, 92, 253, 0.3);
+}
+
+.machine-card:hover .card-field-label,
+.machine-card:hover .card-field-value {
+    color: var(--white);
+}
+
+.machine-card-header {
+    font-size: 18px;
+    font-weight: 550;
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 8px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.machine-card:hover .machine-card-header {
+    color: var(--white);
+    border-color: var(--white);
+}
+
+.card-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.card-field-label {
+    font-size: 11px;
+    font-weight: 550;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease;
+}
+
+.card-field-value {
+    font-size: 14px;
+    font-weight: 550;
     color: var(--text);
+    transition: color 0.2s ease;
+}
+
+.card-btn {
+    width: var(--card-button-width);
+    height: var(--card-button-height);
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: var(--card-button-border-radius);
+    color: var(--blue);
+    font-size: var(--card-button-font-size);
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+}
+
+.sorun-btn {
+    right: var(--sorun-btn-right);
+    bottom: var(--sorun-btn-bottom);
+}
+
+.revizyon-btn {
+    right: var(--revizyon-btn-right);
+    bottom: var(--revizyon-btn-bottom);
+}
+
+.card-btn::after {
+    content: ' +';
+}
+
+.card-btn:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.machine-card:hover .card-btn {
+    border-color: var(--white);
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.machine-card:hover .card-btn:hover {
+    background-color: var(--white);
+    color: var(--blue);
+    border-color: var(--white);
 }

@@ -5,12 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ana Sayfa</title>
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="makineekle.css">
+    <link rel="stylesheet" href="datepicker.css">
 </head>
 <body>
     <div class="btn" id="btn1"></div>
     <div class="btn" id="btn2"></div>
     <div class="btn" id="btn3"></div>
     <div class="btn" id="btn4"></div>
+    <div class="btn" id="btn5"></div>
 
     <div class="card">
         <iframe id="content-frame" src="montaj.html"></iframe>
@@ -55,6 +58,100 @@
         </div>
     </div>
 
+    <!-- Makine Ekle Modalı -->
+    <div class="modal-overlay" id="machineModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 class="modal-title">Yeni Makine Ekle</h2>
+                <button class="close-btn" id="closeMachineBtn" type="button">×</button>
+            </div>
+            
+            <form class="modal-form" id="machineForm">
+                <div class="form-row">
+                    <label class="form-label">Seri No:</label>
+                    <input class="form-input" type="text" id="serialNo" placeholder="Seri numarası..." required />
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">Makine Modeli:</label>
+                    <input class="form-input" type="text" id="machineModel" placeholder="Model adı..." required />
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">Müşteri:</label>
+                    <input class="form-input" type="text" id="customer" placeholder="Müşteri adı..." required />
+                </div>
+
+                <div class="form-row">
+                    <label class="form-label">Başlama Tarihi:</label>
+                    <button type="button" class="date-btn" id="openMachineDatepickerBtn">
+                        <span id="selectedMachineDateDisplay">Tarih seçin</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="cancel-btn" id="cancelMachineBtn">İptal</button>
+                    <button type="submit" class="submit-btn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Makine Datepicker Modal -->
+    <div class="modal-overlay datepicker-modal" id="machineDatepickerModal">
+        <div class="datetime-card">
+            <div class="calendar-section">
+                <div class="datepicker" id="machineDatepicker">
+                    <div class="datepicker-header">
+                        <button class="nav-btn machine-prev" type="button">‹</button>
+                        <div class="current-month" id="machineCurrentMonth">Aralık 2025</div>
+                        <button class="nav-btn machine-next" type="button">›</button>
+                    </div>
+                    <div class="datepicker-days">
+                        <div class="day-name">Pzt</div>
+                        <div class="day-name">Sal</div>
+                        <div class="day-name">Çar</div>
+                        <div class="day-name">Per</div>
+                        <div class="day-name">Cum</div>
+                        <div class="day-name">Cmt</div>
+                        <div class="day-name">Paz</div>
+                    </div>
+                    <div class="datepicker-dates" id="machineDates"></div>
+                </div>
+            </div>
+
+            <div class="time-section">
+                <div class="time-header" id="machineTimeHeader">Saat Seçin</div>
+                <div class="clock-picker" id="machineClockPicker">
+                    <div class="clock-circle">
+                        <div class="clock-center"></div>
+                        <div class="clock-hand" id="machineClockHand"></div>
+                        <div class="clock-numbers" id="machineClockNumbers"></div>
+                    </div>
+                    <div class="selected-time" id="machineSelectedTime">--:--</div>
+                </div>
+                <button class="confirm-btn" id="machineConfirmBtn" type="button" style="display: none;">Tamam</button>
+            </div>
+
+            <div class="datetime-footer">
+                <div class="selected-datetime">
+                    <span id="machineSelectedDateTime">Tarih ve saat seçin</span>
+                </div>
+                <div class="footer-buttons">
+                    <button class="footer-btn machine-today-btn" type="button">Bugün</button>
+                    <button class="footer-btn machine-clear-btn" type="button">Temizle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="datepicker.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
