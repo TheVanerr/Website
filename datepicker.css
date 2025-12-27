@@ -1,0 +1,395 @@
+:root {
+    --blue: #315cfd;
+    --white: #fff;
+    --text: #111;
+    --bg: #e8e8e8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.datetime-card {
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    padding: 18px;
+    width: 460px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+}
+
+.calendar-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.time-section {
+    display: flex;
+    flex-direction: column;
+    border-left: 2px solid var(--bg);
+    padding-left: 18px;
+}
+
+.datetime-footer {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 2px solid var(--bg);
+    margin-top: 8px;
+}
+
+.datepicker-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.datepicker {
+    width: 100%;
+}
+
+.datepicker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.nav-btn {
+    width: 25px;
+    height: 25px;
+    border: 3px solid var(--blue);
+    border-radius: 50%;
+    background-color: var(--white);
+    color: var(--text);
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.nav-btn:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.nav-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(49, 92, 253, 0.25);
+}
+
+.current-month {
+    font-size: 0.85em;
+    font-weight: 550;
+    color: var(--text);
+}
+
+.datepicker-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    margin-bottom: 5px;
+}
+
+.day-name {
+    text-align: center;
+    font-size: 0.7em;
+    font-weight: 550;
+    color: var(--blue);
+    padding: 5px 0;
+}
+
+.datepicker-dates {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+}
+
+/* Time Section */
+.time-header {
+    font-size: 0.85em;
+    font-weight: 550;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.clock-picker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.clock-circle {
+    width: 145px;
+    height: 145px;
+    border: 3px solid var(--blue);
+    border-radius: 50%;
+    position: relative;
+    background-color: var(--white);
+    cursor: pointer;
+}
+
+.clock-center {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    background-color: var(--blue);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+}
+
+.clock-hand {
+    position: absolute;
+    width: 2px;
+    height: 51px;
+    background-color: var(--blue);
+    bottom: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(0deg);
+    transition: transform 0.2s;
+    border-radius: 2px 2px 0 0;
+    pointer-events: none;
+}
+
+.clock-numbers {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.clock-number {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75em;
+    font-weight: 550;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.clock-number:hover {
+    background-color: rgba(49, 92, 253, 0.1);
+}
+
+.clock-number.selected {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.selected-time {
+    font-size: 0.95em;
+    font-weight: 550;
+    color: var(--blue);
+    text-align: center;
+}
+
+.confirm-btn {
+    margin-top: 10px;
+    padding: 7px 26px;
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background-color: var(--white);
+    color: var(--text);
+    font-size: 0.85em;
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.confirm-btn:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.confirm-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(49, 92, 253, 0.25);
+}
+
+.time-picker {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.time-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.time-label {
+    font-size: 0.9em;
+    font-weight: 550;
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.time-scroll {
+    width: 80px;
+    height: 280px;
+    overflow-y: auto;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    padding: 5px;
+    background-color: var(--white);
+}
+
+.time-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.time-scroll::-webkit-scrollbar-thumb {
+    background: rgba(49, 92, 253, 0.35);
+    border-radius: 10px;
+}time-separator {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--blue);
+    padding: 0 5px;
+}
+
+/* Footer */
+.selected-datetime {
+    font-size: 0.85em;
+    font-weight: 550;
+    color: var(--text);
+}
+
+.selected-datetime span {
+    color: var(--blue);
+}
+
+.footer-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.date-cell {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    font-size: 0.8em;
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+}
+
+.date-cell:not(.other-month):not(.disabled):hover {
+    border-color: var(--blue);
+    background-color: rgba(49, 92, 253, 0.1);
+}
+
+.date-cell.other-month {
+    color: #ccc;
+    cursor: default;
+}
+
+.date-cell.disabled {
+    color: #ddd;
+    cursor: not-allowed;
+}
+
+.date-cell.today {
+    border-color: var(--blue);
+    font-weight: bold;
+}
+
+.date-cell.selected {
+    background-color: var(--blue);
+    color: var(--white);
+    border-color: var(--blue);
+}
+
+.date-cell.selected:hover {
+    background-color: var(--blue);
+    opacity: 0.9;
+}
+
+.datepicker-footer {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    padding-top: 20px;
+    border-top: 2px solid var(--bg);
+}
+
+.footer-btn {
+    padding: 6px 18px;
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background-color: var(--white);
+    color: var(--text);
+    font-size: 0.8em;
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.footer-btn:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.footer-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(49, 92, 253, 0.25);
+}
+
+.selected-date {
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    padding: 20px 40px;
+    text-align: center;
+}
+
+.selected-date p {
+    font-size: 1.1em;
+    font-weight: 550;
+    color: var(--text);
+}
+
+.selected-date span {
+    color: var(--blue);
+    font-weight: bold;
+}

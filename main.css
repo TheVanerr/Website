@@ -14,7 +14,7 @@
     --btn-height: 40px;
 
     /* Button text */
-    --btn1-text: "Buton 1";
+    --btn1-text: "Kullanıcı Girişi";
     --btn2-text: "Buton 2";
     --btn3-text: "Buton 3";
     --btn4-text: "Buton 4";
@@ -165,4 +165,168 @@ body {
 .nav-item:focus-visible {
     outline: none;
     box-shadow: 0 0 0 4px rgba(49, 92, 253, 0.25);
+}
+
+/* Giriş Modalı */
+.login-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 10000;
+}
+
+.login-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.login-card {
+    width: 340px;
+    padding: 28px 26px 26px;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-title {
+    margin: 0 0 4px;
+    font-size: 1.4em;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field__label {
+    font-size: 0.9em;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.field__input {
+    width: 100%;
+    height: 50px;
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background: var(--white);
+    font-size: 1em;
+    font-weight: 550;
+    padding: 0 18px;
+    transition: all 0.3s;
+    outline: none;
+    color: var(--text);
+}
+
+.field__input::placeholder {
+    color: #777;
+    font-weight: 400;
+}
+
+.field__input:hover,
+.field__input:focus {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.field__input:focus::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.remember-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: -4px;
+}
+
+.remember-text {
+    font-size: 0.95em;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.switch {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch__track {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--white);
+    border: 2px solid var(--blue);
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.switch__thumb {
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--blue);
+    transform: translateY(-50%);
+    transition: left 0.3s, background 0.3s;
+}
+
+.switch input:checked + .switch__track {
+    background: var(--blue);
+}
+
+.switch input:checked + .switch__track + .switch__thumb {
+    left: calc(100% - 4px - 20px);
+    background: var(--white);
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.login-btn {
+    flex: 1;
+    height: 60px;
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background: var(--white);
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: 550;
+    transition: all 0.3s;
+    color: var(--text);
+}
+
+.login-btn:hover {
+    background: var(--blue);
+    color: var(--white);
+    font-size: 1.5em;
 }

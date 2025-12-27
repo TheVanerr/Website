@@ -1,30 +1,75 @@
-function openModal() {
-    document.getElementById('modalOverlay').classList.add('active');
-}
+// Modal Test JavaScript
 
-function closeModal() {
-    document.getElementById('modalOverlay').classList.remove('active');
-    document.getElementById('taskForm').reset();
-}
-
-document.getElementById('taskForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const description = document.getElementById('taskDescription').value;
-    const deadline = document.getElementById('taskDeadline').value;
+document.addEventListener('DOMContentLoaded', function() {
+    const openModalBtn = document.getElementById('openModalBtn');
+    const modal = document.getElementById('taskModal');
+    const closeBtn = document.getElementById('closeBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const taskForm = document.getElementById('taskForm');
+    const openDatepickerBtn = document.getElementById('openDatepickerBtn');
+    const deadlineDisplay = document.getElementById('deadlineDisplay');
     
-    console.log('Görev Eklendi:', { description, deadline });
-    
-    closeModal();
-});
+    let selectedDeadline = null;
 
-document.getElementById('modalOverlay').addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeModal();
+    // Modal aç
+    if (openModalBtn) {
+        openModalBtn.addEventListener('click', () => {
+            modal.classList.add('active');
+        });
     }
-});
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        closeModal();
+    // Modal kapat
+    function closeModal() {
+        modal.classList.remove('active');
+        taskForm.reset();
+        deadlineDisplay.textContent = 'Seçilmedi';
+        selectedDeadline = null;
     }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeModal);
+    }
+
+    // Overlay'e tıklanınca kapat
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // ESC tuşu ile kapat
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    // Datepicker aç
+    if (openDatepickerBtn) {
+        openDatepickerBtn.addEventListener('click', () => {
+            console.log('Datepicker açılıyor...');
+            // Burada datepicker modalı açılacak
+            alert('Datepicker modalı açılacak (entegrasyon yapılacak)');
+        });
+    }
+
+    // Form submit
+    taskForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        const description = document.getElementById('taskDescription').value;
+
+        console.log('Yeni Görev:', {
+            description,
+            deadline: selectedDeadline
+        });
+
+        alert('Görev Eklendi!\n\nAçıklama: ' + description + '\nBitiş: ' + (selectedDeadline || 'Seçilmedi'));
+        
+        closeModal();
+    });
 });

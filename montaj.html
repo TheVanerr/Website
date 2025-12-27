@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Montaj</title>
     <link rel="stylesheet" href="montaj.css">
+    <link rel="stylesheet" href="datepicker.css">
 </head>
 <body>
     <div class="montaj-card montaj-card-1">
@@ -91,24 +92,87 @@
     <!-- Modal -->
     <div class="modal-overlay" id="taskModal">
         <div class="modal-card">
-            <h2>Yeni Görev Ekle</h2>
-            <form id="taskForm">
+            <div class="modal-header">
+                <h2 class="modal-title">Yeni Görev Ekle</h2>
+                <button class="close-btn" id="closeModalBtn" type="button">×</button>
+            </div>
+            <form id="taskForm" class="modal-form">
                 <div class="form-group">
-                    <label for="taskDescription">Görev Tanımı:</label>
-                    <textarea id="taskDescription" placeholder="Görev açıklamasını girin..." required></textarea>
+                    <label for="taskDescription">Görev Tanımı</label>
+                    <textarea id="taskDescription" rows="4" placeholder="Görev açıklamasını girin..." required></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="taskDeadline">Bitiş Tarihi:</label>
-                    <input type="date" id="taskDeadline" required>
+                <div class="deadline-section">
+                    <div class="deadline-info">
+                        <span class="deadline-label">Bitiş Tarihi:</span>
+                        <span class="deadline-value" id="deadlineDisplay">Seçilmedi</span>
+                    </div>
+                    <button type="button" class="time-btn" id="openDatepickerBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </button>
                 </div>
-                <div class="form-buttons">
-                    <button type="button" id="cancelBtn">İptal</button>
-                    <button type="submit">Tamam</button>
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="cancel-btn">İptal</button>
+                    <button type="submit" class="submit-btn">Kaydet</button>
                 </div>
             </form>
         </div>
     </div>
 
+    <!-- Datepicker Modal -->
+    <div class="modal-overlay datepicker-modal" id="datepickerModal">
+        <div class="datetime-card">
+            <!-- Sol Taraf: Takvim -->
+            <div class="calendar-section">
+                <div class="datepicker" id="datepicker">
+                    <div class="datepicker-header">
+                        <button class="nav-btn prev" type="button">›</button>
+                        <div class="current-month" id="currentMonth">Aralık 2025</div>
+                        <button class="nav-btn next" type="button">›</button>
+                    </div>
+                    <div class="datepicker-days">
+                        <div class="day-name">Pzt</div>
+                        <div class="day-name">Sal</div>
+                        <div class="day-name">Çar</div>
+                        <div class="day-name">Per</div>
+                        <div class="day-name">Cum</div>
+                        <div class="day-name">Cmt</div>
+                        <div class="day-name">Paz</div>
+                    </div>
+                    <div class="datepicker-dates" id="dates"></div>
+                </div>
+            </div>
+
+            <!-- Sağ Taraf: Saat ve Dakika -->
+            <div class="time-section">
+                <div class="time-header" id="timeHeader">Saat Seçin</div>
+                <div class="clock-picker" id="clockPicker">
+                    <div class="clock-circle">
+                        <div class="clock-center"></div>
+                        <div class="clock-hand" id="clockHand"></div>
+                        <div class="clock-numbers" id="clockNumbers"></div>
+                    </div>
+                    <div class="selected-time" id="selectedTime">--:--</div>
+                </div>
+                <button class="confirm-btn" id="confirmBtn" type="button" style="display: none;">Tamam</button>
+            </div>
+
+            <!-- Alt: Seçim ve Butonlar -->
+            <div class="datetime-footer">
+                <div class="selected-datetime">
+                    <span id="selectedDateTime">Tarih ve saat seçin</span>
+                </div>
+                <div class="footer-buttons">
+                    <button class="footer-btn today-btn" type="button">Bugün</button>
+                    <button class="footer-btn clear-btn" type="button">Temizle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="datepicker.js"></script>
     <script src="montaj.js"></script>
 </body>
 </html>

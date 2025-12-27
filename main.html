@@ -24,6 +24,37 @@
         <div class="nav-item" data-page="diger">Diğer</div>
     </div>
 
+    <!-- Giriş Modalı -->
+    <div class="login-modal-overlay" id="loginModal">
+        <div class="login-card">
+            <h1 class="login-title">Giriş Yap</h1>
+
+            <label class="field">
+                <span class="field__label">Kullanıcı Adı</span>
+                <input class="field__input" type="text" placeholder="Kullanıcı adınız" id="loginUsername" />
+            </label>
+
+            <label class="field">
+                <span class="field__label">Şifre</span>
+                <input class="field__input" type="password" placeholder="Şifreniz" id="loginPassword" />
+            </label>
+
+            <div class="remember-row">
+                <label class="switch">
+                    <input type="checkbox" id="rememberMe" />
+                    <span class="switch__track"></span>
+                    <span class="switch__thumb"></span>
+                </label>
+                <span class="remember-text">Beni hatırla</span>
+            </div>
+
+            <div class="actions">
+                <button class="login-btn" type="button" id="loginSubmit">Tamam</button>
+                <button class="login-btn" type="button" id="loginCancel">İptal</button>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
 </body>
 </html>

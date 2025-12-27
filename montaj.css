@@ -57,12 +57,12 @@
     --task-date-font-size: 0.8em;
 
     /* Task counter position */
-    --task-counter-x: 150px;
+    --task-counter-x: 180px;
     --task-counter-y: 100px;
     --task-counter-font-size: 0.8em;
 
     /* Task status position and size */
-    --task-status-x: 375px;
+    --task-status-x: 440px;
     --task-status-y: 90px;
     --task-status-width: 130px;
     --task-status-height: 35px;
@@ -367,101 +367,186 @@ body {
 
 /* Modal Styles */
 .modal-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    justify-content: center;
+    display: flex;
     align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 1000;
 }
 
 .modal-overlay.active {
-    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.datepicker-modal {
+    z-index: 1001;
 }
 
 .modal-card {
     background-color: var(--white);
     border: 3px solid var(--blue);
     border-radius: 45px;
-    padding: 40px;
-    width: 90%;
-    max-width: 500px;
+    padding: 30px;
+    width: 460px;
+    max-width: 90%;
 }
 
-.modal-card h2 {
-    color: var(--text);
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 25px;
-    text-align: center;
-    font-size: 1.5em;
+}
+
+.modal-title {
+    color: var(--text);
+    font-size: 1.3em;
+    font-weight: 550;
+    margin: 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: var(--blue);
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #2448d4;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .form-group label {
-    display: block;
     color: var(--text);
-    margin-bottom: 10px;
     font-weight: 550;
-    font-size: 1em;
+    font-size: 0.9em;
 }
 
-.form-group input,
 .form-group textarea {
     width: 100%;
-    padding: 12px 18px;
+    padding: 15px 20px;
     border: 3px solid var(--blue);
-    border-radius: 20px;
-    font-size: 1em;
-    outline: none;
+    border-radius: 25px;
+    font-size: 0.95em;
     font-family: Arial, sans-serif;
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(49, 92, 253, 0.2);
+}
+
+.deadline-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+}
+
+.deadline-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.deadline-label {
+    color: var(--text);
+    font-weight: 550;
+    font-size: 0.9em;
+}
+
+.deadline-value {
+    color: var(--blue);
+    font-weight: 550;
+    font-size: 0.9em;
+}
+
+.time-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 3px solid var(--blue);
+    background-color: var(--white);
+    color: var(--blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
     transition: all 0.2s;
 }
 
-.form-group input:focus,
-.form-group textarea:focus {
-    box-shadow: 0 0 0 4px rgba(49, 92, 253, 0.25);
+.time-btn:hover {
+    background-color: var(--blue);
+    color: var(--white);
 }
 
-.form-group textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-.form-buttons {
+.form-actions {
     display: flex;
-    gap: 15px;
+    gap: 10px;
     justify-content: flex-end;
-    margin-top: 30px;
+    margin-top: 5px;
 }
 
-.form-buttons button {
+.cancel-btn,
+.submit-btn {
     padding: 12px 30px;
     border: 3px solid var(--blue);
-    border-radius: 45px;
-    background-color: var(--white);
-    color: var(--text);
-    font-size: 1em;
+    border-radius: 25px;
+    font-size: 0.95em;
     font-weight: 550;
     cursor: pointer;
     transition: all 0.2s;
 }
 
-.form-buttons button:hover {
+.cancel-btn {
+    background-color: var(--white);
+    color: var(--blue);
+}
+
+.cancel-btn:hover {
     background-color: var(--blue);
     color: var(--white);
 }
 
-.form-buttons button[type="submit"] {
+.submit-btn {
     background-color: var(--blue);
     color: var(--white);
 }
 
-.form-buttons button[type="submit"]:hover {
-    opacity: 0.9;
+.submit-btn:hover {
+    background-color: #2448d4;
 }

@@ -3,14 +3,19 @@
 // Global değişkenler
 let currentUser = '';
 let currentUserInitials = '';
+let selectedDateTime = null;
 
 document.addEventListener('DOMContentLoaded', function() {
     // Modal elementleri
     const modal = document.getElementById('taskModal');
+    const datepickerModal = document.getElementById('datepickerModal');
     const taskForm = document.getElementById('taskForm');
     const cancelBtn = document.getElementById('cancelBtn');
     const addBtns = document.querySelectorAll('.add-btn');
     const tasksContainer = document.querySelector('.tasks-container');
+    const openDatepickerBtn = document.getElementById('openDatepickerBtn');
+    const deadlineDisplay = document.getElementById('deadlineDisplay');
+    const closeModalBtn = document.getElementById('closeModalBtn');
     
     // Görev ekle butonlarına tıklama
     addBtns.forEach(btn => {
@@ -31,10 +36,34 @@ document.addEventListener('DOMContentLoaded', function() {
     function closeModal() {
         modal.classList.remove('active');
         taskForm.reset();
+        deadlineDisplay.textContent = 'Seçilmedi';
+        selectedDateTime = null;
     }
     
     // İptal butonu
     cancelBtn.addEventListener('click', closeModal);
+    
+    // Kapat butonu
+    closeModalBtn.addEventListener('click', closeModal);
+    
+    // Datepicker aç
+    openDatepickerBtn.addEventListener('click', function() {
+        datepickerModal.classList.add('active');
+    });
+    
+    // Datepicker'dan tarih seçildiğinde
+    window.addEventListener('datetimeSelected', function(e) {
+        selectedDateTime = e.detail;
+        const { date, hour, minute } = selectedDateTime;
+        
+        // Tarihi formatla (DD.MM.YYYY HH:MM)
+        const [year, month, day] = date.split('-');
+        const formattedDateTime = `${day}.${month}.${year} ${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+        deadlineDisplay.textContent = formattedDateTime;
+        
+        // Datepicker modalını kapat
+        datepickerModal.classList.remove('active');
+    });
     
     // Modal dışına tıklama
     modal.addEventListener('click', function(e) {
@@ -43,10 +72,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
+    datepickerModal.addEventListener('click', function(e) {
+        if (e.target === datepickerModal) {
+            datepickerModal.classList.remove('active');
+        }
+    });
+    
     // ESC tuşu
     document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
+        if (e.key === 'Escape') {
+            if (datepickerModal.classList.contains('active')) {
+                datepickerModal.classList.remove('active');
+            } else if (modal.classList.contains('active')) {
+                closeModal();
+            }
         }
     });
     
@@ -55,10 +94,14 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         
         const description = document.getElementById('taskDescription').value;
-        const deadline = document.getElementById('taskDeadline').value;
+        
+        if (!selectedDateTime) {
+            alert('Lütfen bir tarih ve saat seçin!');
+            return;
+        }
         
         // Yeni görev kartı oluştur
-        const taskCard = createTaskCard(currentUserInitials, description, deadline);
+        const taskCard = createTaskCard(currentUserInitials, description, selectedDateTime);
         tasksContainer.appendChild(taskCard);
         
         // Yeni eklenen combobox'u başlat
@@ -72,25 +115,28 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Geri sayımı başlat
         const counterEl = taskCard.querySelector('.task-counter');
-        startCountdown(deadline, counterEl);
+        startCountdown(selectedDateTime, counterEl);
         
         closeModal();
     });
     
     // Görev kartı oluştur
-    function createTaskCard(userInitials, description, deadline) {
+    function createTaskCard(userInitials, description, dateTime) {
         const card = document.createElement('div');
         card.className = 'task-card';
         
-        // Tarihi formatla
-        const [year, month, day] = deadline.split('-');
-        const formattedDate = `${day}.${month}.${year}`;
+        // Tarihi formatla (DD.MM.YYYY HH:MM)
+        const [year, month, day] = dateTime.date.split('-');
+        const formattedDate = `${day}.${month}.${year} ${String(dateTime.hour).padStart(2, '0')}:${String(dateTime.minute).padStart(2, '0')}`;
+        
+        // ISO formatında deadline oluştur
+        const isoDeadline = `${dateTime.date}T${String(dateTime.hour).padStart(2, '0')}:${String(dateTime.minute).padStart(2, '0')}:00`;
         
         card.innerHTML = `
             <div class="task-card-avatar">${userInitials}</div>
             <div class="task-description">${description}</div>
             <div class="task-deadline">Bitiş: ${formattedDate}</div>
-            <div class="task-counter" data-deadline="${deadline}">Hesaplanıyor...</div>
+            <div class="task-counter" data-deadline="${isoDeadline}">Hesaplanıyor...</div>
             <div class="combo task-status" data-open="false">
                 <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
                     <span class="combo__value">Devam Ediyor</span>
@@ -107,10 +153,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Geri sayım fonksiyonu
-    function startCountdown(deadline, counterElement) {
+    function startCountdown(dateTime, counterElement) {
         function updateCountdown() {
             const now = new Date();
-            const deadlineDate = new Date(deadline + 'T23:59:59'); // Gün sonuna kadar
+            let deadlineDate;
+            
+            if (typeof dateTime === 'string') {
+                deadlineDate = new Date(dateTime);
+            } else {
+                const { date, hour, minute } = dateTime;
+                deadlineDate = new Date(`${date}T${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}:00`);
+            }
+            
             const diff = deadlineDate - now;
             
             if (diff <= 0) {
@@ -124,7 +178,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
-            counterElement.textContent = `${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye`;
+            counterElement.textContent = `${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye kaldı`;
         }
         
         updateCountdown();
