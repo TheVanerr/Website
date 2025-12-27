@@ -1,0 +1,22 @@
+:root {
+    --blue: #315cfd;
+    --white: #fff;
+    --text: #111;
+    --bg: #e8e8e8;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg);
+    padding: 20px;
+}
+
+h1 {
+    color: var(--text);
+}

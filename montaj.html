@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Montaj</title>
+    <link rel="stylesheet" href="montaj.css">
+</head>
+<body>
+    <div class="montaj-card montaj-card-1">
+        <div class="user-avatar">FG</div>
+        <div class="card-title">Fatih GÜRAL</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn">+</div>
+    </div>
+
+    <div class="montaj-card montaj-card-2">
+        <div class="user-avatar">DA</div>
+        <div class="card-title">Doğan AÇIKEL</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn">+</div>
+    </div>
+
+    <div class="montaj-card montaj-card-3">
+        <div class="user-avatar">YŞ</div>
+        <div class="card-title">Yakup ŞAHİN</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn">+</div>
+    </div>
+
+    <div class="montaj-card montaj-card-4">
+        <div class="user-avatar">HG</div>
+        <div class="card-title">Hakan GÜL</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn">+</div>
+    </div>
+
+    <div class="tasks-container">
+        <div class="task-card">
+            <div class="task-description">Görev açıklaması buraya gelecek</div>
+            <div class="task-deadline">Bitiş: 31.12.2025</div>
+            <div class="task-counter">4 gün kaldı</div>
+            <div class="combo task-status" data-open="false">
+                <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="combo__value">Devam Ediyor</span>
+                </button>
+                <ul class="combo__list" role="listbox" tabindex="-1">
+                    <li class="combo__option" role="option" data-value="Devam Ediyor">Devam Ediyor</li>
+                    <li class="combo__option" role="option" data-value="Bitti">Bitti</li>
+                </ul>
+            </div>
+            <button class="task-delete">×</button>
+        </div>
+
+        <div class="task-card">
+            <div class="task-description">İkinci görev açıklaması</div>
+            <div class="task-deadline">Bitiş: 28.12.2025</div>
+            <div class="task-counter">1 gün kaldı</div>
+            <div class="combo task-status" data-open="false">
+                <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="combo__value">Devam Ediyor</span>
+                </button>
+                <ul class="combo__list" role="listbox" tabindex="-1">
+                    <li class="combo__option" role="option" data-value="Devam Ediyor">Devam Ediyor</li>
+                    <li class="combo__option" role="option" data-value="Bitti">Bitti</li>
+                </ul>
+            </div>
+            <button class="task-delete">×</button>
+        </div>
+
+        <div class="task-card">
+            <div class="task-description">Üçüncü görev detayları</div>
+            <div class="task-deadline">Bitiş: 02.01.2026</div>
+            <div class="task-counter">6 gün kaldı</div>
+            <div class="combo task-status" data-open="false">
+                <button class="combo__button" type="button" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="combo__value">Devam Ediyor</span>
+                </button>
+                <ul class="combo__list" role="listbox" tabindex="-1">
+                    <li class="combo__option" role="option" data-value="Devam Ediyor">Devam Ediyor</li>
+                    <li class="combo__option" role="option" data-value="Bitti">Bitti</li>
+                </ul>
+            </div>
+            <button class="task-delete">×</button>
+        </div>
+    </div>
+
+    <script src="montaj.js"></script>
+</body>
+</html>

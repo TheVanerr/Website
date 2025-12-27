@@ -1,0 +1,1 @@
+// Makine page JavaScript

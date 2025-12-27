@@ -1,0 +1,343 @@
+:root {
+    --blue: #315cfd;
+    --white: #fff;
+    --text: #111;
+    --bg: #e8e8e8;
+
+    /* User cards position and size */
+    --card-start-x: 20px;
+    --card-start-y: 20px;
+    --card-width: 438px;
+    --card-height: 150px;
+    --card-gap: 20px;
+
+    /* Avatar position and size */
+    --avatar-x: 12.5%;
+    --avatar-y: 25px;
+    --avatar-size: 60px;
+    --avatar-font-size: 0.8em;
+
+    /* Add button position and size */
+    --add-btn-x: 90%;
+    --add-btn-y: 85px;
+    --add-btn-radius: 40px;
+    --add-btn-font-size: 2em;
+
+    /* Label position and size */
+    --label-x: 72.5%;
+    --label-y: 97.5px;
+    --label-font-size: 0.9em;
+
+    /* Card title position and size */
+    --card-title-x: 35%;
+    --card-title-y: 45px;
+    --card-title-font-size: 0.8em;
+
+    /* Task card position and size */
+    --task-card-x: 20px;
+    --task-card-y: 200px;
+    --task-card-width: 895px;
+    --task-card-height: 150px;
+    --task-card-gap: 20px;
+
+    /* Task description position */
+    --task-desc-x: 30px;
+    --task-desc-y: 30px;
+    --task-desc-font-size: 0.8em;
+
+    /* Task deadline position */
+    --task-date-x: 30px;
+    --task-date-y: 100px;
+    --task-date-font-size: 0.8em;
+
+    /* Task counter position */
+    --task-counter-x: 150px;
+    --task-counter-y: 100px;
+    --task-counter-font-size: 0.8em;
+
+    /* Task status position and size */
+    --task-status-x: 250px;
+    --task-status-y: 90px;
+    --task-status-width: 130px;
+    --task-status-height: 35px;
+    --task-status-font-size: 0.7em;
+
+    /* Combobox option styling */
+    --combo-option-padding: 12px 14px;
+    --combo-option-font-size: 0.7em;
+    --combo-option-font-weight: 550;
+    --combo-option-border-radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg);
+    position: relative;
+    min-height: 100vh;
+}
+
+.montaj-card {
+    position: absolute;
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+}
+
+.montaj-card-1 {
+    left: var(--card-start-x);
+    top: var(--card-start-y);
+    width: var(--card-width);
+    height: var(--card-height);
+}
+
+.montaj-card-2 {
+    left: calc(var(--card-start-x) + var(--card-width) + var(--card-gap));
+    top: var(--card-start-y);
+    width: var(--card-width);
+    height: var(--card-height);
+}
+
+.montaj-card-3 {
+    left: calc(var(--card-start-x) + (var(--card-width) + var(--card-gap)) * 2);
+    top: var(--card-start-y);
+    width: var(--card-width);
+    height: var(--card-height);
+}
+
+.montaj-card-4 {
+    left: calc(var(--card-start-x) + (var(--card-width) + var(--card-gap)) * 3);
+    top: var(--card-start-y);
+    width: var(--card-width);
+    height: var(--card-height);
+}
+
+.user-avatar {
+    position: absolute;
+    left: var(--avatar-x);
+    top: var(--avatar-y);
+    transform: translateX(-50%);
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    background-color: var(--white);
+    background-image: url('./avatar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: 3px solid var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--avatar-font-size);
+    font-weight: bold;
+    color: var(--blue);
+    overflow: hidden;
+}
+
+.add-btn {
+    position: absolute;
+    left: var(--add-btn-x);
+    top: var(--add-btn-y);
+    transform: translateX(-50%);
+    width: var(--add-btn-radius);
+    height: var(--add-btn-radius);
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--add-btn-font-size);
+    color: var(--blue);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.add-btn:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}
+
+.add-label {
+    position: absolute;
+    left: var(--label-x);
+    top: var(--label-y);
+    transform: translateX(-50%);
+    font-size: var(--label-font-size);
+    color: var(--text);
+    font-weight: 500;
+}
+
+.card-title {
+    position: absolute;
+    left: var(--card-title-x);
+    top: var(--card-title-y);
+    transform: translateX(-50%);
+    font-size: var(--card-title-font-size);
+    color: var(--text);
+    font-weight: bold;
+    text-align: center;
+    width: 90%;
+}
+
+.tasks-container {
+    position: absolute;
+    left: var(--task-card-x);
+    top: var(--task-card-y);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--task-card-gap);
+    width: calc(var(--task-card-width) * 2 + var(--task-card-gap));
+}
+
+.task-card {
+    position: relative;
+    width: var(--task-card-width);
+    height: var(--task-card-height);
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+}
+
+.task-description {
+    position: absolute;
+    left: var(--task-desc-x);
+    top: var(--task-desc-y);
+    font-size: var(--task-desc-font-size);
+    color: var(--text);
+    font-weight: 500;
+    max-width: calc(100% - 60px);
+}
+
+.task-deadline {
+    position: absolute;
+    left: var(--task-date-x);
+    top: var(--task-date-y);
+    font-size: var(--task-date-font-size);
+    color: var(--text);
+}
+
+.task-counter {
+    position: absolute;
+    left: var(--task-counter-x);
+    top: var(--task-counter-y);
+    font-size: var(--task-counter-font-size);
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.task-status {
+    position: absolute;
+    left: var(--task-status-x);
+    top: var(--task-status-y);
+    width: var(--task-status-width);
+}
+
+.task-status .combo__button {
+    width: 100%;
+    height: var(--task-status-height);
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background: var(--white);
+    color: var(--text);
+    font-size: var(--task-status-font-size);
+    font-weight: 550;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+}
+
+.task-status .combo__button:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.task-status[data-open="true"] .combo__button {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.task-status .combo__button:focus {
+    outline: none;
+    box-shadow: 0 0 0 4px rgba(49, 92, 253, 0.25);
+}
+
+.task-status .combo__list {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 10px);
+    margin: 0;
+    padding: 8px;
+    list-style: none;
+    background: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 18px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+    max-height: 240px;
+    overflow: auto;
+    display: none;
+    z-index: 10;
+}
+
+.task-status[data-open="true"] .combo__list {
+    display: block;
+}
+
+.task-status .combo__option {
+    padding: var(--combo-option-padding);
+    border-radius: var(--combo-option-border-radius);
+    font-size: var(--combo-option-font-size);
+    font-weight: var(--combo-option-font-weight);
+    cursor: pointer;
+    user-select: none;
+}
+
+.task-status .combo__option:hover,
+.task-status .combo__option[aria-selected="true"],
+.task-status .combo__option.is-active {
+    background: rgba(49, 92, 253, 0.12);
+}
+
+.task-status .combo__list::-webkit-scrollbar {
+    width: 10px;
+}
+
+.task-status .combo__list::-webkit-scrollbar-thumb {
+    background: rgba(49, 92, 253, 0.35);
+    border-radius: 10px;
+}
+
+.task-delete {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background-color: var(--white);
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    color: var(--blue);
+    font-size: 1.5em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.3s;
+}
+
+.task-delete:hover {
+    background-color: var(--blue);
+    color: var(--white);
+}

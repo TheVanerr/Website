@@ -1,0 +1,1 @@
+// İdare page JavaScript

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Test</title>
+    <link rel="stylesheet" href="modal-test.css">
+</head>
+<body>
+    <button onclick="openModal()" style="margin: 20px;">Modal Aç</button>
+
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-card">
+            <h2>Yeni Görev Ekle</h2>
+            <form id="taskForm">
+                <div class="form-group">
+                    <label for="taskDescription">Görev Açıklaması:</label>
+                    <input type="text" id="taskDescription" placeholder="Görev açıklaması girin">
+                </div>
+                <div class="form-group">
+                    <label for="taskDeadline">Bitiş Tarihi:</label>
+                    <input type="date" id="taskDeadline">
+                </div>
+                <div class="form-buttons">
+                    <button type="button" onclick="closeModal()">İptal</button>
+                    <button type="submit">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="modal-test.js"></script>
+</body>
+</html>
