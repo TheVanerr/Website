@@ -4,10 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>İdare</title>
-    <link rel="stylesheet" href="idare.css">
+    <link rel="stylesheet" href="montaj.css">
+    <link rel="stylesheet" href="datepicker.css">
 </head>
 <body>
-    <h1>İdare Sayfası</h1>
-    <script src="idare.js"></script>
+    <div class="montaj-card montaj-card-1">
+        <div class="user-avatar">AB</div>
+        <div class="card-title">Ahmet BEY</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn" data-user="AB" data-username="Ahmet BEY">+</div>
+    </div>
+
+    <div class="montaj-card montaj-card-2">
+        <div class="user-avatar">EG</div>
+        <div class="card-title">Elif GÖKMEN</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn" data-user="EG" data-username="Elif GÖKMEN">+</div>
+    </div>
+
+    <div class="montaj-card montaj-card-3">
+        <div class="user-avatar">D1</div>
+        <div class="card-title">Diğer1</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn" data-user="D1" data-username="Diğer1">+</div>
+    </div>
+
+    <div class="montaj-card montaj-card-4">
+        <div class="user-avatar">D2</div>
+        <div class="card-title">Diğer2</div>
+        <div class="add-label">Görev Ekle</div>
+        <div class="add-btn" data-user="D2" data-username="Diğer2">+</div>
+    </div>
+
+    <div class="tasks-container">
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="taskModal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 class="modal-title">Yeni Görev Ekle</h2>
+                <button class="close-btn" id="closeModalBtn" type="button">×</button>
+            </div>
+            <form id="taskForm" class="modal-form">
+                <div class="form-group">
+                    <label for="taskDescription">Görev Tanımı</label>
+                    <textarea id="taskDescription" rows="4" placeholder="Görev açıklamasını girin..." required></textarea>
+                </div>
+                <div class="deadline-section">
+                    <div class="deadline-info">
+                        <span class="deadline-label">Bitiş Tarihi:</span>
+                        <span class="deadline-value" id="deadlineDisplay">Seçilmedi</span>
+                    </div>
+                    <button type="button" class="time-btn" id="openDatepickerBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 6v6l4 2"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancelBtn" class="cancel-btn">İptal</button>
+                    <button type="submit" class="submit-btn">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Datepicker Modal -->
+    <div class="modal-overlay datepicker-modal" id="datepickerModal">
+        <div class="datetime-card">
+            <div class="calendar-section">
+                <div class="datepicker" id="datepicker">
+                    <div class="datepicker-header">
+                        <button class="nav-btn prev" type="button">›</button>
+                        <div class="current-month" id="currentMonth">Aralık 2025</div>
+                        <button class="nav-btn next" type="button">›</button>
+                    </div>
+                    <div class="datepicker-days">
+                        <div class="day-name">Pzt</div>
+                        <div class="day-name">Sal</div>
+                        <div class="day-name">Çar</div>
+                        <div class="day-name">Per</div>
+                        <div class="day-name">Cum</div>
+                        <div class="day-name">Cmt</div>
+                        <div class="day-name">Paz</div>
+                    </div>
+                    <div class="datepicker-dates" id="dates"></div>
+                </div>
+            </div>
+
+            <div class="time-section">
+                <div class="time-header" id="timeHeader">Saat Seçin</div>
+                <div class="clock-picker" id="clockPicker">
+                    <div class="clock-circle">
+                        <div class="clock-center"></div>
+                        <div class="clock-hand" id="clockHand"></div>
+                        <div class="clock-numbers" id="clockNumbers"></div>
+                    </div>
+                    <div class="selected-time" id="selectedTime">--:--</div>
+                </div>
+                <button class="confirm-btn" id="confirmBtn" type="button" style="display: none;">Tamam</button>
+            </div>
+
+            <div class="datetime-footer">
+                <div class="selected-datetime">
+                    <span id="selectedDateTime">Tarih ve saat seçin</span>
+                </div>
+                <div class="footer-buttons">
+                    <button class="footer-btn today-btn" type="button">Bugün</button>
+                    <button class="footer-btn clear-btn" type="button">Temizle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="datepicker.js"></script>
+    <script src="montaj.js"></script>
 </body>
 </html>

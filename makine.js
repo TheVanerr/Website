@@ -27,6 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
             machinesContainer.appendChild(card);
         });
     }
+
+    function deleteMachine(index) {
+        const machines = JSON.parse(localStorage.getItem('machines') || '[]');
+        machines.splice(index, 1);
+        localStorage.setItem('machines', JSON.stringify(machines));
+        loadMachines();
+    }
     
     function createMachineCard(machine, index) {
         const card = document.createElement('div');
@@ -49,63 +56,108 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <button class="card-btn sorun-btn" data-index="${index}">Sorun Ekle</button>
             <button class="card-btn revizyon-btn" data-index="${index}">Revizyon Ekle</button>
-            
-            <div class="itemlist-container sorun-list-container">
-                <ul class="itemlist sorun-itemlist" data-type="sorun" data-index="${index}">
-                    <li><button class="itemlist__item itemlist__item--active" type="button">Sorun 1</button></li>
-                    <li><button class="itemlist__item" type="button">Sorun 2</button></li>
-                    <li><button class="itemlist__item" type="button">Sorun 3</button></li>
-                    <li><button class="itemlist__item" type="button">Sorun 4</button></li>
-                </ul>
-            </div>
-            
-            <div class="itemlist-container revizyon-list-container">
-                <ul class="itemlist revizyon-itemlist" data-type="revizyon" data-index="${index}">
-                    <li><button class="itemlist__item itemlist__item--active" type="button">Revizyon 1</button></li>
-                    <li><button class="itemlist__item" type="button">Revizyon 2</button></li>
-                    <li><button class="itemlist__item" type="button">Revizyon 3</button></li>
-                    <li><button class="itemlist__item" type="button">Revizyon 4</button></li>
-                </ul>
-            </div>
+            <button class="machine-delete" data-index="${index}">×</button>
         `;
         
         // Buton event listener'ları
         const sorunBtn = card.querySelector('.sorun-btn');
         const revizyonBtn = card.querySelector('.revizyon-btn');
-        const sorunList = card.querySelector('.sorun-itemlist');
-        const revizyonList = card.querySelector('.revizyon-itemlist');
+        const deleteBtn = card.querySelector('.machine-delete');
         
         sorunBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            window.parent.openSoreModal('sorun', index);
+            openSoreModal('sorun', index);
         });
         
         revizyonBtn.addEventListener('click', function(e) {
             e.stopPropagation();
-            window.parent.openSoreModal('revizyon', index);
+            openSoreModal('revizyon', index);
         });
         
-        // ItemList toggle mantığı
-        function setupItemList(itemlist) {
-            itemlist.addEventListener('click', function(e) {
-                e.stopPropagation();
-                
-                // Eğer bir item'a tıklandıysa
-                if (e.target.classList.contains('itemlist__item')) {
-                    // Aktif item'ı değiştir
-                    const items = itemlist.querySelectorAll('.itemlist__item');
-                    items.forEach(item => item.classList.remove('itemlist__item--active'));
-                    e.target.classList.add('itemlist__item--active');
-                } else {
-                    // Liste'nin kendisine tıklandıysa toggle yap
-                    itemlist.classList.toggle('expanded');
-                }
-            });
-        }
-        
-        setupItemList(sorunList);
-        setupItemList(revizyonList);
+        deleteBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (confirm('Bu makineyi silmek istediğinize emin misiniz?')) {
+                deleteMachine(index);
+            }
+        });
         
         return card;
+    }
+
+    // Sorun/Revizyon Modal fonksiyonları
+    const soreModal = document.getElementById('soreModal');
+    const soreModalTitle = document.getElementById('soreModalTitle');
+    const closeSoreBtn = document.getElementById('closeSoreBtn');
+    const cancelSoreBtn = document.getElementById('cancelSoreBtn');
+    const soreForm = document.getElementById('soreForm');
+    let currentSoreType = null;
+    let currentMachineIndex = null;
+
+    function openSoreModal(type, machineIndex) {
+        currentSoreType = type;
+        currentMachineIndex = machineIndex;
+        
+        if (type === 'sorun') {
+            soreModalTitle.textContent = 'Sorun Ekle';
+        } else {
+            soreModalTitle.textContent = 'Revizyon Ekle';
+        }
+        
+        soreModal.classList.add('active');
+        document.getElementById('soreTitle').focus();
+    }
+
+    function closeSoreModal() {
+        soreModal.classList.remove('active');
+        soreForm.reset();
+        currentSoreType = null;
+        currentMachineIndex = null;
+    }
+
+    if (closeSoreBtn) {
+        closeSoreBtn.addEventListener('click', closeSoreModal);
+    }
+
+    if (cancelSoreBtn) {
+        cancelSoreBtn.addEventListener('click', closeSoreModal);
+    }
+
+    // Overlay'e tıklanınca kapat
+    if (soreModal) {
+        soreModal.addEventListener('click', (e) => {
+            if (e.target === soreModal) {
+                closeSoreModal();
+            }
+        });
+    }
+
+    // ESC tuşu ile kapat
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && soreModal && soreModal.classList.contains('active')) {
+            closeSoreModal();
+        }
+    });
+
+    // Form submit
+    if (soreForm) {
+        soreForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const title = document.getElementById('soreTitle').value;
+            const description = document.getElementById('soreDescription').value;
+            const status = document.getElementById('soreStatus').value;
+
+            console.log('Yeni ' + currentSoreType + ':', {
+                type: currentSoreType,
+                machineIndex: currentMachineIndex,
+                title,
+                description,
+                status
+            });
+
+            alert(`${currentSoreType === 'sorun' ? 'Sorun' : 'Revizyon'} eklendi!\n\nBaşlık: ${title}\nDurum: ${status}`);
+            
+            closeSoreModal();
+        });
     }
 });

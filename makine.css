@@ -5,7 +5,7 @@
     --bg: #e8e8e8;
     
     /* Makine Kart Ayarları */
-    --card-width: 895px;
+    --card-width: 1810px;
     --card-height: 200px;
     --card-gap-x: 20px;  /* Kartlar arası yatay mesafe */
     --card-gap-y: 20px;  /* Kartlar arası dikey mesafe */
@@ -22,25 +22,17 @@
     --card-button-font-size: 13px;
     
     /* Sorun Ekle Buton Konumu */
-    --sorun-btn-right: 520px;  /* Kartın sağından uzaklık */
+    --sorun-btn-right: 1220px;  /* Kartın sağından uzaklık */
     --sorun-btn-bottom: 155px;  /* Kartın altından uzaklık */
     
     /* Revizyon Ekle Buton Konumu */
-    --revizyon-btn-right: 150px;  /* Kartın sağından uzaklık */
+    --revizyon-btn-right: 450px;  /* Kartın sağından uzaklık */
     --revizyon-btn-bottom: 155px;  /* Kartın altından uzaklık */
     
-    /* ItemList Ayarları */
-    --itemlist-width: 260px;
-    --itemlist-item-height: 40px;
-    --itemlist-border-radius: 25px;
-    
-    /* Sorun ItemList Konumu */
-    --sorun-itemlist-right: 465px;  /* Kartın sağından uzaklık */
-    --sorun-itemlist-bottom: 100px;  /* Kartın altından uzaklık */
-    
-    /* Revizyon ItemList Konumu */
-    --revizyon-itemlist-right: 100px;  /* Kartın sağından uzaklık */
-    --revizyon-itemlist-bottom: 100px;  /* Kartın altından uzaklık */
+    /* Silme Butonu (Çarpı) Konumu */
+    --delete-btn-right: 15px;  /* Kartın sağından uzaklık */
+    --delete-btn-top: 55%;  /* Kartın üstünden uzaklık (yüzde) */
+    --delete-btn-size: 30px;  /* Çarpı butonu boyutu */
 }
 
 * {
@@ -53,17 +45,17 @@ body {
     font-family: Arial, sans-serif;
     background-color: var(--bg);
     padding: 0;
+    margin: 0;
     overflow: auto;
 }
 
 .machines-container {
-    display: grid;
-    grid-template-columns: repeat(2, var(--card-width));
-    column-gap: var(--card-gap-x);
-    row-gap: var(--card-gap-y);
-    padding-left: var(--card-position-x);
-    padding-top: var(--card-position-y);
-    padding-bottom: var(--card-position-y);
+    position: absolute;
+    left: var(--card-position-x);
+    top: var(--card-position-y);
+    display: flex;
+    flex-direction: column;
+    gap: var(--card-gap-y);
 }
 
 .machine-card {
@@ -177,95 +169,40 @@ body {
     border-color: var(--white);
 }
 
-/* ItemList */
-.itemlist-container {
+/* Makine Silme Butonu */
+.machine-delete {
     position: absolute;
-    z-index: 10;
-}
-
-.sorun-list-container {
-    right: var(--sorun-itemlist-right);
-    bottom: var(--sorun-itemlist-bottom);
-}
-
-.revizyon-list-container {
-    right: var(--revizyon-itemlist-right);
-    bottom: var(--revizyon-itemlist-bottom);
-}
-
-.itemlist {
-    width: var(--itemlist-width);
-    border: 3px solid var(--blue);
-    border-radius: var(--itemlist-border-radius);
-    background: var(--white);
-    overflow: hidden;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    max-height: var(--itemlist-item-height);
-    transition: max-height 0.3s ease;
-}
-
-.itemlist.expanded {
-    max-height: 400px;
-}
-
-.itemlist > li {
-    margin: 0;
-    padding: 0;
-}
-
-.itemlist__item {
-    width: 100%;
-    height: var(--itemlist-item-height);
-    border: 0;
-    background: transparent;
-    color: var(--text);
+    right: var(--delete-btn-right);
+    top: var(--delete-btn-top);
+    transform: translateY(-50%);
+    width: var(--delete-btn-size);
+    height: var(--delete-btn-size);
+    background-color: var(--white);
+    border: 2px solid var(--blue);
+    border-radius: 50%;
+    color: var(--blue);
+    font-size: 1.5em;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 20px;
-    font-size: 1.1em;
-    font-weight: 550;
-    cursor: pointer;
-    transition: background 0.3s, color 0.3s;
+    line-height: 1;
+    transition: all 0.3s;
+    padding: 0;
 }
 
-.itemlist__item + .itemlist__item {
-    border-top: 1px solid #e0e0e0;
-}
-
-.itemlist__item:hover {
-    background: var(--blue);
+.machine-delete:hover {
+    background-color: var(--blue);
     color: var(--white);
 }
 
-.itemlist__item--active {
-    background: var(--blue);
-    color: var(--white);
-}
-
-.itemlist__item:focus-visible {
-    outline: none;
-    box-shadow: inset 0 0 0 3px rgba(49, 92, 253, 0.25);
-}
-
-.machine-card:hover .itemlist {
+.machine-card:hover .machine-delete {
     border-color: var(--white);
-}
-
-.machine-card:hover .itemlist__item {
+    background-color: var(--blue);
     color: var(--white);
 }
 
-.machine-card:hover .itemlist__item:hover {
-    background: var(--white);
-    color: var(--blue);
-}
-
-.machine-card:hover .itemlist__item--active {
-    background: var(--white);
+.machine-card:hover .machine-delete:hover {
+    background-color: var(--white);
     color: var(--blue);
 }
