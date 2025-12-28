@@ -1,0 +1,400 @@
+:root {
+    --blue: #315cfd;
+    --white: #fff;
+    --text: #111;
+    --bg: #e8e8e8;
+    
+    /* JavaScript tarafından set edilecek */
+    --vh: 100vh;
+    --vw: 100vw;
+
+    /* Button positions - SAĞ ÜSTTE */
+    --btn-start-y: 10px;
+    --btn-gap: 5px;
+
+    /* Button size */
+    --btn-width: 75px;
+    --btn-height: 32px;
+
+    /* Button text */
+    --btn1-text: "Giriş";
+    --btn2-text: "Btn 2";
+    --btn3-text: "Btn 3";
+    --btn4-text: "Btn 4";
+    --btn5-text: "Makine +";
+    --btn-font-size: 0.55em;
+    --btn-hover-font-size: 0.65em;
+
+    /* Card position and size */
+    --card-x: 10px;
+    --card-y: 52px;
+
+    /* Navbar - SOL ALTTA */
+    --navbar-width: 180px;
+    --navbar-height: 45px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--bg);
+    overflow: hidden;
+    height: var(--vh);
+    width: var(--vw);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: none;
+}
+
+.btn {
+    position: fixed;
+    width: var(--btn-width);
+    height: var(--btn-height);
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--btn-font-size);
+    color: var(--text);
+    font-weight: 550;
+    transition: all 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    z-index: 1001;
+}
+
+.btn:active {
+    background-color: var(--blue);
+    color: var(--white);
+    transform: scale(0.95);
+}
+
+#btn1::after {
+    content: var(--btn1-text);
+}
+
+#btn2::after {
+    content: var(--btn2-text);
+}
+
+#btn3::after {
+    content: var(--btn3-text);
+}
+
+#btn4::after {
+    content: var(--btn4-text);
+}
+
+#btn5::after {
+    content: var(--btn5-text);
+}
+
+#btn1 {
+    right: calc(10px + (var(--btn-width) + var(--btn-gap)) * 4);
+    top: var(--btn-start-y);
+}
+
+#btn2 {
+    right: calc(10px + (var(--btn-width) + var(--btn-gap)) * 3);
+    top: var(--btn-start-y);
+}
+
+#btn3 {
+    right: calc(10px + (var(--btn-width) + var(--btn-gap)) * 2);
+    top: var(--btn-start-y);
+}
+
+#btn4 {
+    right: calc(10px + (var(--btn-width) + var(--btn-gap)));
+    top: var(--btn-start-y);
+}
+
+#btn5 {
+    right: 10px;
+    top: var(--btn-start-y);
+}
+
+.card {
+    position: absolute;
+    left: var(--card-x);
+    top: var(--card-y);
+    width: calc(var(--vw) - 20px);
+    height: calc(var(--vh) - 122px);
+    background-color: var(--white);
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+
+.card iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    border: none;
+    display: block;
+    overflow: hidden;
+}
+
+.navbar {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    display: flex;
+    flex-direction: column;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    background-color: var(--white);
+    overflow: hidden;
+    z-index: 1001;
+    width: var(--navbar-width);
+}
+
+.nav-item {
+    border: 0;
+    background: transparent;
+    color: var(--text);
+    height: var(--navbar-height);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: 550;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0 15px;
+}
+
+.nav-item:active {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.nav-item--active {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.nav-item:focus-visible {
+    outline: none;
+}
+
+/* Login Modal */
+.login-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 10000;
+}
+
+.login-modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.login-card {
+    width: 90%;
+    max-width: 340px;
+    padding: 25px;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-title {
+    margin: 0 0 4px;
+    font-size: 1.3em;
+    font-weight: 700;
+    text-align: center;
+    color: var(--text);
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field__label {
+    font-size: 0.85em;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.field__input {
+    width: 100%;
+    height: 45px;
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background: var(--white);
+    font-size: 0.95em;
+    font-weight: 550;
+    padding: 0 18px;
+    transition: all 0.3s;
+    outline: none;
+    color: var(--text);
+}
+
+.field__input::placeholder {
+    color: #777;
+    font-weight: 400;
+}
+
+.field__input:focus {
+    background: var(--blue);
+    color: var(--white);
+}
+
+.field__input:focus::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.remember-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: -4px;
+}
+
+.remember-text {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.switch {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch__track {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+    background: var(--white);
+    border: 2px solid var(--blue);
+    transition: background 0.3s, border-color 0.3s;
+}
+
+.switch__thumb {
+    position: absolute;
+    top: 50%;
+    left: 4px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--blue);
+    transform: translateY(-50%);
+    transition: left 0.3s, background 0.3s;
+}
+
+.switch input:checked + .switch__track {
+    background: var(--blue);
+}
+
+.switch input:checked + .switch__track + .switch__thumb {
+    left: calc(100% - 4px - 20px);
+    background: var(--white);
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.login-btn {
+    flex: 1;
+    height: 55px;
+    border: 3px solid var(--blue);
+    border-radius: 45px;
+    background: var(--white);
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 550;
+    transition: all 0.3s;
+    color: var(--text);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.login-btn:active {
+    background: var(--blue);
+    color: var(--white);
+    transform: scale(0.97);
+}
+
+/* Modal için genel stiller */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 10000;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    width: 90%;
+    max-width: 400px;
+    padding: 25px;
+    border: 3px solid var(--blue);
+    border-radius: 25px;
+    background: var(--white);
+}

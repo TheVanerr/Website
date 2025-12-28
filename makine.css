@@ -206,3 +206,52 @@ body {
     background-color: var(--white);
     color: var(--blue);
 }
+
+/* Responsive Design - Telefon için */
+@media (max-width: 768px) {
+    :root {
+        --card-width: calc(100vw - 40px);
+        --card-height: auto;
+        --card-position-x: 10px;
+        --card-position-y: 10px;
+        --card-gap-y: 15px;
+        --card-padding: 12px;
+        --card-button-width: 110px;
+        --card-button-height: 32px;
+        --card-button-font-size: 11px;
+        --delete-btn-size: 28px;
+    }
+    
+    .machines-container {
+        left: var(--card-position-x);
+        top: var(--card-position-y);
+        right: var(--card-position-x);
+    }
+    
+    .machine-card {
+        min-height: 180px;
+        height: auto;
+    }
+    
+    .machine-card-header {
+        font-size: 16px;
+    }
+    
+    .card-field-label {
+        font-size: 10px;
+    }
+    
+    .card-field-value {
+        font-size: 13px;
+    }
+    
+    .sorun-btn {
+        right: 120px;
+        bottom: 10px;
+    }
+    
+    .revizyon-btn {
+        right: 10px;
+        bottom: 10px;
+    }
+}

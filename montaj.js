@@ -6,6 +6,34 @@ let currentUserInitials = '';
 let selectedDateTime = null;
 
 document.addEventListener('DOMContentLoaded', function() {
+    // Responsive için kullanıcı kartlarını grid container'a koy
+    if (window.innerWidth <= 768) {
+        const userCards = document.querySelectorAll('.montaj-card');
+        const gridContainer = document.createElement('div');
+        gridContainer.style.cssText = `
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        `;
+        
+        userCards.forEach(card => {
+            gridContainer.appendChild(card.cloneNode(true));
+            card.remove();
+        });
+        
+        document.body.insertBefore(gridContainer, document.querySelector('.tasks-container'));
+        
+        // Event listener'ları yeniden ekle
+        gridContainer.querySelectorAll('.add-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentUserInitials = this.getAttribute('data-user');
+                currentUser = this.getAttribute('data-username');
+                openModal();
+            });
+        });
+    }
+    
     // Modal elementleri
     const modal = document.getElementById('taskModal');
     const datepickerModal = document.getElementById('datepickerModal');
